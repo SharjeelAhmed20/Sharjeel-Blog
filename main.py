@@ -12,8 +12,6 @@ from flask import abort
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm,RegisterForm,LoginForm,CommentForm
 
-# For adding profile images to the comment section
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 
@@ -40,7 +38,7 @@ class Base(DeclarativeBase):
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
-
+# For adding profile images to the comment section
 gravatar = Gravatar(app,
                     size=100,
                     rating='g',
@@ -101,7 +99,7 @@ def register():
     form =  RegisterForm()
     email = form.email.data
     result = db.session.execute(db.select(User).where(User.email == email))
-    user = result.scalar()
+    user = result.scaler()
 
     if form.validate_on_submit():
         email = form.email.data
